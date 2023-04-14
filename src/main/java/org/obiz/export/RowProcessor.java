@@ -21,7 +21,7 @@ public class RowProcessor {
     private final ArrayList<Integer> columnTypes;
     int currrentRow = 0;
     private int batch;
-    private boolean autoSized;
+    private boolean autoSized = false;
 
     public RowProcessor(ResultSetMetaData metaData, SXSSFWorkbook wb, int batch) throws SQLException {
         columnCount = metaData.getColumnCount();
@@ -53,7 +53,6 @@ public class RowProcessor {
         }
         if(currrentRow%batch==0) {
             if(currrentRow==batch) {
-                autoSized = true;
                 autoSizeWidths();
             }
             System.out.print("|");
@@ -72,8 +71,9 @@ public class RowProcessor {
         }
         //here is end of first batch
         for (int i = 0; i < columnCount; i++) {
-            ws.autoSizeColumn(i+1);
+            ws.autoSizeColumn(i);
         }
+        autoSized = true;
     }
 
     private void fillCell(int i, Cell cell, ResultSet resultSet) throws SQLException {

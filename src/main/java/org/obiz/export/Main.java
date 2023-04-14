@@ -32,7 +32,7 @@ public class Main {
                     System.out.print("*");
                 }
             });
-            System.out.println("\nExported rows = " + loader.getTotalRows());
+            System.out.println("\nExported rows = " + (loader.getTotalRows()-1));
             System.out.println("Takes seconds: " + start.until(Instant.now(), ChronoUnit.MILLIS)/1000f);
         } catch (ClassNotFoundException | SQLException | IOException e) {
             e.printStackTrace();
