@@ -1,12 +1,16 @@
 package org.obiz.export;
 
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
@@ -41,6 +45,7 @@ public class Loader {
             while(resultSet.next()) {
                 processor.consumeRow(resultSet, onBatch);
             }
+            processor.autoSizeWidths();
             totalRows = processor.getCurrrentRow();
             OutputStream stream = Files.newOutputStream(file.toPath());
             wb.write(stream);
